@@ -1,11 +1,30 @@
 "use strcit";
+const User = require("../../models/User");
 
-const hello = (req, res) => {
-  res.render("home/index");
+const output = {
+  hello: (req, res) => {
+    res.render("home/index");
+  },
+  login: (req, res) => {
+    res.render("home/login");
+  },
+  register: (req, res) => {
+    res.render("home/register");
+  },
 };
 
-const login = (req, res) => {
-  res.render("home/login");
+const process = {
+  login: async (req, res) => {
+    const user = new User(req.body);
+    const response = await user.login();
+    return res.json(response);
+  },
+
+  register: async (req, res) => {
+    const user = new User(req.body);
+    const response = await user.register();
+    return res.json(response);
+  },
 };
 
-module.exports = { hello, login };
+module.exports = { output, process };
